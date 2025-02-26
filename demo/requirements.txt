@@ -1,0 +1,13 @@
+pandas
+mlflow
+dvc
+scikit-learn
+jupyter
+fastparquet
+fastapi
+uvicorn
+evidently 
+numpy
+pytest
+pytest-cov
+pylint
