@@ -1,0 +1,27 @@
+stages:
+  read_data:
+    cmd: python src/read_data.py data/yellow_tripdata_2024-11.parquet
+    deps:
+      - src/read_data.py
+      - data/yellow_tripdata_2024-11.parquet
+    outs:
+      - data2/processed/read_data.parquet
+
+  # process_data:
+  #   cmd: python pipeline.py process-data
+  #   deps:
+  #     - pipeline.py
+  #     - data/processed/read_data.parquet
+  #   outs:
+  #     - data/processed/processed_data.parquet
+
+  # train_model:
+  #   cmd: python pipeline.py train-model
+  #   deps:
+  #     - pipeline.py
+  #     - data/processed/processed_data.parquet
+  #   outs:
+  #     - models/dv.pkl
+  #     - models/model.pkl
+  #   metrics:
+  #     - metrics.json

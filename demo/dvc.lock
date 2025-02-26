@@ -1,0 +1,18 @@
+schema: '2.0'
+stages:
+  read_data:
+    cmd: python src/read_data.py data/yellow_tripdata_2024-11.parquet
+    deps:
+    - path: data/yellow_tripdata_2024-11.parquet
+      hash: md5
+      md5: f9ba92de89b33645218de15d0ded8b7f
+      size: 60658709
+    - path: src/read_data.py
+      hash: md5
+      md5: 74afe079d9eee4c90812154efefe5dee
+      size: 313
+    outs:
+    - path: data2/processed/read_data.parquet
+      hash: md5
+      md5: 9597bf5a753b0390a673a7e674ba3163
+      size: 74557302
