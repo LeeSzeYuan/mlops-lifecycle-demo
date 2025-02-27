@@ -1,156 +1,56 @@
-# mlops-lifecycle-demo
-To demo mlops lifecycle in a AI/ML project
+# MMOps Lifecycle
 
-To initialize **Git** and **DVC** for managing **data versioning** and **pipeline management**, follow these steps:
+## Setup
 
----
+1. **Activate Virtual Environment** (Windows):
+   ```sh
+   .\.venv\Scripts\activate
+   ```
 
-## **🚀 Step 1: Initialize Git & DVC**
-### **1️⃣ Initialize Git**
-First, create a new repo (or navigate to an existing one):
+2. **Start MLflow Tracking Server**:
+   ```sh
+   mlflow server --backend-store-uri sqlite:///mlflow.db
+   ```
+   This command starts an MLflow server with SQLite as the backend store.
 
-```bash
-git init  # Initialize Git repository
-git add .  # Stage all files
-git commit -m "Initial commit"
-```
+3. **Run FastAPI Server**:
+   ```sh
+   uvicorn serving:app --host 0.0.0.0 --port 8000 --reload
+   ```
+   This command starts the FastAPI service and makes it accessible on `http://0.0.0.0:8000`.
 
----
+4. **Run PyLint for Code Quality Analysis**:
+   ```sh
+   pylint --score=yes src/ > test/test_report/pylint_report.txt
+   ```
+   This command runs PyLint on the `src/` directory and saves the report to `test/test_report/pylint_report.txt`.
 
-### **2️⃣ Initialize DVC**
-Run:
+5. **Run Tests with Coverage Report**:
+   ```sh
+   pytest --cov=. --cov-report=html
+   ```
+   This command runs all tests and generates a coverage report in an HTML format.
 
-```bash
-dvc init  # Initialize DVC
-git commit -m "Initialize DVC"
-```
+6. **Start Evidently AI UI**:
+   ```sh
+   evidently ui
+   ```
+   This command launches the Evidently AI dashboard to monitor data quality and drift.
 
-DVC will create a `.dvc/` directory to manage configurations.
-
----
-
-## **🗄 Step 2: Set Up Data Versioning**
-### **3️⃣ Add Data to DVC**
-For example, if your data is in the `data/` folder:
-
-```bash
-dvc add data/
-```
-
-This will:
-✅ Create a **`data.dvc`** file (metadata about the data).  
-✅ Move `data/` to `.gitignore` (Git won't track it, only DVC does).  
-
-Commit the changes:
-
-```bash
-git add data.dvc .gitignore
-git commit -m "Track data with DVC"
-```
+## Additional Notes
+- Ensure all dependencies are installed using:
+  ```sh
+  pip install -r requirements.txt
+  ```
+- Modify the `mlflow server` command if using a different backend (e.g., PostgreSQL, MySQL).
+- Use `--host 127.0.0.1` instead of `0.0.0.0` for local access only.
 
 ---
 
-### **4️⃣ Set Up DVC Remote Storage (Optional)**
-DVC needs a remote storage location to version large datasets. You can use **Google Drive, S3, Azure, etc.**  
-For example, to set up **Google Drive**:
+## Troubleshooting
+- If any command fails, check if the required dependencies are installed.
+- Use `pip list` to verify installed packages.
+- Run `deactivate` to exit the virtual environment if needed.
 
-```bash
-dvc remote add myremote gdrive://your-folder-id
-dvc push  # Upload data to remote storage
-```
+Happy Coding! 🚀
 
-Commit the configuration:
-
-```bash
-git commit .dvc/config -m "Configure DVC remote storage"
-```
-
----
-
-## **🛠 Step 3: Set Up DVC Pipeline**
-### **5️⃣ Create a DVC Pipeline**
-Define your **stages** in `dvc.yaml`. Example:
-
-```yaml
-stages:
-  preprocess:
-    cmd: python src/preprocess.py data/raw.parquet
-    deps:
-      - src/preprocess.py
-      - data/raw.parquet
-    outs:
-      - data/processed.parquet
-
-  train:
-    cmd: python src/train.py data/processed.parquet
-    deps:
-      - src/train.py
-      - data/processed.parquet
-    outs:
-      - models/model.pkl
-```
-
-Commit this:
-
-```bash
-git add dvc.yaml
-git commit -m "Add DVC pipeline"
-```
-
----
-
-### **6️⃣ Run Pipeline & Track Changes**
-Run the pipeline:
-
-```bash
-dvc repro
-```
-
-Push outputs (data & models) to remote storage:
-
-```bash
-dvc push
-```
-
----
-
-## **🔄 Step 4: How to Pull & Use the Data**
-If cloning on a new machine:
-
-```bash
-git clone <repo_url>
-dvc pull  # Download the latest data & models
-```
-
----
-
-### **✅ Summary**
-| Step | Command |
-|------|---------|
-| Initialize Git | `git init && git commit -m "Initial commit"` |
-| Initialize DVC | `dvc init && git commit -m "Initialize DVC"` |
-| Track Data | `dvc add data/ && git commit -m "Track data with DVC"` |
-| Set Up Remote | `dvc remote add myremote gdrive://your-folder-id && dvc push` |
-| Define Pipeline | Edit `dvc.yaml`, then `git commit -m "Add DVC pipeline"` |
-| Run Pipeline | `dvc repro && dvc push` |
-| Pull Data (New Machine) | `git clone <repo_url> && dvc pull` |
-
----
-
-Let me know if you need adjustments! 🚀
-
-.\.venv\Scripts\activate
-mlflow server --backend-store-uri sqlite:///mlflow.db  
-
-uvicorn serving:app --host 0.0.0.0 --port 8000 --reload
-curl -X 'POST' 'http://0.0.0.0:8000/predict' -H 'Content-Type: application/json' -d '{"PULocationID": "138", "DOLocationID": "33", "trip_distance": 9.76}'
-
-
-pylint --score=yes src/ > test/test_report/pylint_report.txt
-
-pytest --cov=. --cov-report=html
-xdg-open htmlcov/index.html  # Linux
-open htmlcov/index.html      # macOS
-start htmlcov\index.html
-
-evidently ui
