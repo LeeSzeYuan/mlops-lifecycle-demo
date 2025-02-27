@@ -36,10 +36,12 @@ def load_model():
 
     return model, dv
 
+
 def read_inference_dataframe(path):
     df = pd.read_parquet(path, engine="pyarrow")
     df = df.head(1)
     return df.to_dict(orient="records")[0]
+
 
 def prepare_features(ride):
     features = {}
@@ -47,12 +49,14 @@ def prepare_features(ride):
     features['trip_distance'] = ride['trip_distance']
     return features
 
+
 def predict(model, dv, features):
     # features = {'PU_DO': '138_33', 'trip_distance': 9.76}
     features = dv.transform(features)
 
     preds = model.predict(features)  
     return float(preds[0])
+
 
 model, dv = load_model()
 

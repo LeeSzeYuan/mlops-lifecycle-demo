@@ -3,6 +3,7 @@ import mlflow
 import pickle
 from src.serving import load_model, predict
 
+# helper function
 def get_run_id():
     mlflow.set_tracking_uri("http://127.0.0.1:5000")
     client = MlflowClient("http://127.0.0.1:5000")
@@ -13,6 +14,7 @@ def get_run_id():
 
     return run_id
 
+# unit test if model can be loaded
 def test_load_model():
     run_id = get_run_id()
 
@@ -20,6 +22,7 @@ def test_load_model():
 
     assert model is not None
 
+# unit test if load dictVectorizer can be loaded
 def test_load_dv():
     run_id = get_run_id()
 
@@ -30,6 +33,7 @@ def test_load_dv():
 
     assert dv is not None
 
+# unit test if prediction function usable for FastAPI app
 def test_predict():
     model, dv = load_model()
     features = {'PU_DO': '138_33', 'trip_distance': 9.76}
