@@ -1,0 +1,115 @@
+{
+  "id": "019545b5-83e9-7699-a1f3-bf17af8c57b2",
+  "name": "NYC Taxi Data Quality",
+  "description": "NYC Taxi Data Quality",
+  "dashboard": {
+    "name": "NYC Taxi Data Quality",
+    "panels": [
+      {
+        "type": "evidently:dashboard_panel:DashboardPanelCounter",
+        "id": "019545ba-6837-7e0d-ace6-534d69452526",
+        "title": "NYC taxi data dashboard",
+        "filter": {
+          "metadata_values": {},
+          "tag_values": [],
+          "include_test_suites": false
+        },
+        "size": 2,
+        "agg": "none",
+        "value": null,
+        "text": null
+      },
+      {
+        "type": "evidently:dashboard_panel:DashboardPanelPlot",
+        "id": "019545bc-ea16-7ffd-bf71-7394673a1177",
+        "title": "Number of Missing Values",
+        "filter": {
+          "metadata_values": {},
+          "tag_values": [],
+          "include_test_suites": false
+        },
+        "size": 1,
+        "values": [
+          {
+            "field_path": "current.number_of_missing_values",
+            "metric_id": "DatasetMissingValuesMetric",
+            "metric_fingerprint": null,
+            "metric_args": {},
+            "legend": "Missing Values"
+          }
+        ],
+        "plot_type": "bar"
+      },
+      {
+        "type": "evidently:dashboard_panel:DashboardPanelPlot",
+        "id": "019545bd-d90f-773b-b6ef-152c98ea8386",
+        "title": "Feature Drift: Trip Distance",
+        "filter": {
+          "metadata_values": {},
+          "tag_values": [],
+          "include_test_suites": false
+        },
+        "size": 1,
+        "values": [
+          {
+            "field_path": "current.drift_score",
+            "metric_id": "ColumnDriftMetric",
+            "metric_fingerprint": null,
+            "metric_args": {},
+            "legend": "Drift Score"
+          }
+        ],
+        "plot_type": "scatter"
+      },
+      {
+        "type": "evidently:dashboard_panel:DashboardPanelPlot",
+        "id": "019545be-f3ef-7ba1-8832-756f414c1223",
+        "title": "Dataset Drift Over Time",
+        "filter": {
+          "metadata_values": {},
+          "tag_values": [],
+          "include_test_suites": false
+        },
+        "size": 1,
+        "values": [
+          {
+            "field_path": "share_of_drifted_columns",
+            "metric_id": "DatasetDriftMetric",
+            "metric_fingerprint": null,
+            "metric_args": {},
+            "legend": "Drifted Columns (%)"
+          }
+        ],
+        "plot_type": "line"
+      },
+      {
+        "type": "evidently:dashboard_panel:DashboardPanelPlot",
+        "id": "019545c0-98e5-719f-9dfa-03f205717a51",
+        "title": "Inference Count",
+        "filter": {
+          "metadata_values": {},
+          "tag_values": [],
+          "include_test_suites": false
+        },
+        "size": 1,
+        "values": [
+          {
+            "field_path": "current.number_of_rows",
+            "metric_id": "DatasetSummaryMetric",
+            "metric_fingerprint": null,
+            "metric_args": {},
+            "legend": "count"
+          }
+        ],
+        "plot_type": "bar"
+      }
+    ],
+    "tabs": [],
+    "tab_id_to_panel_ids": {}
+  },
+  "team_id": null,
+  "org_id": null,
+  "date_from": null,
+  "date_to": null,
+  "created_at": "2025-02-27T12:41:18.570864"
+}

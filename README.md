@@ -140,6 +140,7 @@ dvc pull  # Download the latest data & models
 Let me know if you need adjustments! 🚀
 
 .\.venv\Scripts\activate
+mlflow server --backend-store-uri sqlite:///mlflow.db  
 
 uvicorn serving:app --host 0.0.0.0 --port 8000 --reload
 curl -X 'POST' 'http://0.0.0.0:8000/predict' -H 'Content-Type: application/json' -d '{"PULocationID": "138", "DOLocationID": "33", "trip_distance": 9.76}'
@@ -151,3 +152,5 @@ pytest --cov=. --cov-report=html
 xdg-open htmlcov/index.html  # Linux
 open htmlcov/index.html      # macOS
 start htmlcov\index.html
+
+evidently ui

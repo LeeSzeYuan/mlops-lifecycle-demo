@@ -3,7 +3,7 @@ import sys
 
 def read_dataframe(path):
     df = pd.read_parquet(path, engine="pyarrow")
-    df.to_parquet("data2/processed/read_data.parquet")
+    df.to_parquet("pipelineOutput/processed/read_data.parquet")
     return df
 
 if __name__ == "__main__":

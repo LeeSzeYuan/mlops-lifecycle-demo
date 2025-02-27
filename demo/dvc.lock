@@ -9,10 +9,26 @@ stages:
       size: 60658709
     - path: src/read_data.py
       hash: md5
-      md5: 74afe079d9eee4c90812154efefe5dee
-      size: 313
+      md5: f998aa161e7406614db5ebc3343639d0
+      size: 322
     outs:
-    - path: data2/processed/read_data.parquet
+    - path: pipelineOutput/processed/read_data.parquet
       hash: md5
       md5: 9597bf5a753b0390a673a7e674ba3163
       size: 74557302
+  process_data:
+    cmd: python src/process_data.py pipelineOutput/processed/read_data.parquet
+    deps:
+    - path: pipelineOutput/processed/read_data.parquet
+      hash: md5
+      md5: 9597bf5a753b0390a673a7e674ba3163
+      size: 74557302
+    - path: src/process_data.py
+      hash: md5
+      md5: c730c86a74cabc1c8d914cc7985ce3e3
+      size: 833
+    outs:
+    - path: pipelineOutput/processed/processed_data.parquet
+      hash: md5
+      md5: cc31b5c89618b7b8d98f4cf028783abb
+      size: 99001593
