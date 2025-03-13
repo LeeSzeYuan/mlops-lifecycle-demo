@@ -1,4 +1,4 @@
-# MMOps Lifecycle
+# MLOps Lifecycle
 
 ## Setup
 
